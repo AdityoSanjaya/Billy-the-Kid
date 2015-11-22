@@ -1,0 +1,112 @@
+
+
+
+```{r beer, results = 'asis', warning=FALSE, message=FALSE, echo=FALSE}
+library(plm, quietly = TRUE)
+data_panel <- pdata.frame(data, index = c("Firm", "Year"), drop.index =  TRUE, row.names = TRUE)
+
+tabel2_reg1 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT, data = data_panel, model = "within" )
+tabel2_reg2 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg3 <- plm(BRIB_CORR ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg4 <- plm(BUSS_ETH ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg5 <- plm(FAIR_COMP ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg6 <- plm(POL_CONTR ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg7 <- plm(INDIG_PPL ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg8 <- plm(IND_EC_IMP ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel2_reg9 <- plm(X0TH_ENG ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+
+stargazer(tabel2_reg1, tabel2_reg2, tabel2_reg3, tabel2_reg4, tabel2_reg5, tabel2_reg6, tabel2_reg7, tabel2_reg8, tabel2_reg9, type = 'html', report = "vct*", title = "Tabel II. OLS regression on the relationship between community engagement and corporate governance mechanisms. ")
+
+
+```
+
+
+
+
+
+
+```{r kisanak, results = 'asis', warning=FALSE, message=FALSE, echo=FALSE}
+library(plm, quietly = TRUE)
+data_panel <- pdata.frame(data, index = c("Firm", "Year"), drop.index =  TRUE, row.names = TRUE)
+robust1 <- coeftest(tabel2_reg1, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust2 <- coeftest(tabel2_reg2, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust3 <- coeftest(tabel2_reg3, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust4 <- coeftest(tabel2_reg4, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust5 <- coeftest(tabel2_reg5, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust6 <- coeftest(tabel2_reg6, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust7 <- coeftest(tabel2_reg7, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust8 <- coeftest(tabel2_reg8, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+robust9 <- coeftest(tabel2_reg9, vcov=function(x) vcovHC(x, method="arellano",
+                                                         type="HC1", cluster="group"))
+
+stargazer(robust1, robust2, robust3, robust4, robust5, robust6, robust7, robust8, robust9, type = 'html', report = "vct*", title = "Tabel II.I OLS regression on the relationship between community engagement and corporate governance mechanisms. Robust t-statistics")
+
+```
+
+
+
+
+
+
+
+```{r pletok, results = 'asis', warning=FALSE, message=FALSE, echo=FALSE}
+library(plm, quietly = TRUE)
+
+tabel3_reg1 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + DIVIDEND +  LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel3_reg2 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + DIVIDEND + BRD_INDP_DIV + LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel3_reg3 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + DIVIDEND + BRD_MEET_DIV +LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel3_reg4 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + DIVIDEND + BRD_SIZE_DIV +LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+tabel3_reg5 <- plm(CEI ~ BRD_INDP + BRD_MEET + BRD_SIZE + BRD_COMPT + DIVIDEND + BRD_COMPT_DIV +LOSS + TOT_ASSETS + SLACK + ROE , data = data_panel, model = "within" )
+
+stargazer( tabel3_reg1, tabel3_reg2, tabel3_reg3, tabel3_reg4, tabel3_reg5, type = 'html', report = "vct*", title = "Tabel III. OLS regression on the moderating effects of dividend yield.")
+
+```
+
+
+
+
+```{r enak, results = 'asis', warning=FALSE, message=FALSE, echo=FALSE}
+library(plm, quietly = TRUE)
+data_panel <- pdata.frame(data, index = c("Firm", "Year"), drop.index =  TRUE, row.names = TRUE)
+
+robust11 <- coeftest(tabel3_reg1, vcov=function(x) vcovHC(x, method="arellano",
+                                                          type="HC1", cluster="group"))
+robust22 <- coeftest(tabel3_reg2, vcov=function(x) vcovHC(x, method="arellano",
+                                                          type="HC1", cluster="group"))
+robust33 <- coeftest(tabel3_reg3, vcov=function(x) vcovHC(x, method="arellano",
+                                                          type="HC1", cluster="group"))
+robust44 <- coeftest(tabel3_reg4, vcov=function(x) vcovHC(x, method="arellano",
+                                                          type="HC1", cluster="group"))
+robust55 <- coeftest(tabel3_reg5, vcov=function(x) vcovHC(x, method="arellano",
+                                                          type="HC1", cluster="group"))
+
+
+stargazer(robust11, robust22, robust33, robust44, robust55,  type = 'html', report = "vct*", title = "Tabel III.I OLS regression on the moderating effects of dividend yield. Robust t-statistics")
+
+```
+
+```{r trotsky, results = 'asis', warning=FALSE, message=FALSE, echo=FALSE}
+library(plm, quietly = TRUE)
+
+tabel4_reg1 <- plm(CEI ~ BRD_EFFC +  DIVIDEND +  LOSS + TOT_ASSETS + SLACK + ROE, data = data_panel, model = "within" )
+tabel4_reg2 <- plm(ALT_CEI ~ BRD_EFFC +  DIVIDEND +  LOSS + TOT_ASSETS + SLACK + ROE, data = data_panel, model = "within" )
+tabel4_reg3 <- plm(CEI ~ BRD_EFFC +  DIVIDEND + BRD_EFFC_DIV + LOSS + TOT_ASSETS + SLACK + ROE, data = data_panel, model = "within" )
+tabel4_reg4 <- plm(ALT_CEI ~ BRD_EFFC +  DIVIDEND + BRD_EFFC_DIV + LOSS + TOT_ASSETS + SLACK + ROE, data = data_panel, model = "within" )
+tabel4_reg5 <- plm(BRD_EFFC ~ ALT_CEI + LOSS + TOT_ASSETS + SLACK + ROE, data = data_panel, model = "within" )
+tabel4_reg6 <- plm(ALT_CEI ~ BRD_EFFC +LOSS + TOT_ASSETS + SLACK + ROE, data = data_panel, model = "within" )
+
+stargazer(tabel4_reg1, tabel4_reg2, tabel4_reg3, tabel4_reg4, tabel4_reg5, tabel4_reg6,  type = 'html', report = "vct*", title = "Tabel IV. Robustness check.")
+```
+
+
+
+
+
